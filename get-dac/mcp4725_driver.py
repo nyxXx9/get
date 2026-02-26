@@ -31,7 +31,7 @@ class MCP4725:
             print(f"Напряжение выходит за динамический диапазон ЦАП (0.00 - {self.dynamic_range:.2f} В)")
             print("Устанавливаем 0.0 В")
             return 0
-        MCP4725.set_number(self, int(voltage / self.dynamic_range * 4096))
+        MCP4725.set_number(self, int(voltage / self.dynamic_range * 4095))
 
 if __name__ == "__main__":
     try:
