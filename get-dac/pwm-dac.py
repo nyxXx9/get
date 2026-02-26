@@ -20,28 +20,26 @@ class PWM_DAC:
         GPIO.output(self.gpio_bits, 0)
         GPIO.cleanup()
 
-    # def set_number(self, number):
-    #     bits = [int(element) for element in bin(number) [2:].zfill(8)]
-
-    #     if number > 0:
-    #         GPIO.output(self.gpio_bits, 1)
-    #     else:
-    #         GPIO.output(self.gpio_bits, 0)
-
-    #     return bits
-
     def set_voltage(self, voltage):
-        duty_cycle = (voltage / self.dynamic_range) * 100
-        self.pwm.ChangeDutyCycle(duty_cycle)
-        # if not (0.0 <= voltage <= self.dynamic_range):
-        #     print(f"Напряжение {voltage:.3f} В выходит за диапазон 0.00 - {self.dynamic_range:.2f} В. Устанавливается 0 В.")
-        #     print("Устанавливаем 0.0 В")
-        #     number = 0
-        # else:
-        #     number = int(voltage / self.dynamic_range * 255)
+        if not (0.0 <= voltage <= self.dynamic_range):
+            print(f"Напряжение {voltage:.3f} В выходит за диапазон 0.00 - {self.dynamic_range:.2f} В. Устанавливается 0 В.")
+            duty_cycle = 0
+            number = 0
+         else:
+             duty_cycle = (voltage / self.dynamic_range) * 100
+             number = int(voltage / self.dynamic_range * 255)
 
-        # self.set_number(number)
-        # return number
+        self.pmw.ChangeDutyCycle(duty_cycle)
+        return number
+
+        self.pmw.ChangeDutyCycle(duty_cycle)
+
+        bits = dec2bin(number)
+        for i, pin in enumerate(self.gpio_bits):
+            GPIO.output(pin, bits[i])
+
+        return number
+        
 
 if __name__ == "__main__":
     try:
