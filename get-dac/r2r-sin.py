@@ -2,13 +2,13 @@ import r2r_dac as r2r
 import signal_generator as sg
 import time
 
-amplitude = 3.2
-signal_frequency = 10
+amplitude = 3.3
+signal_frequency = 1
 sampling_frequency = 1000
 
 if __name__ == "__main__":
+    dac = r2r.R2R_DAC([22, 27, 17, 26, 25, 21, 20, 16], 3.3, False)
     try:
-        dac = r2r.R2R_DAC([16, 20, 21, 25, 26, 17, 27, 22], 3.3)
         start_time = time.time()
         
         while True:
